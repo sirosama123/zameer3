@@ -84,7 +84,7 @@ class _VendorMainState extends State<VendorMain> {
                       snapshot.data!.docs[index].data()! as Map<String, dynamic>;
                  return  Padding(
       padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.w),
-      child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}"),
+      child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}", nature: '',),
     );
                 },
               ),
@@ -97,7 +97,7 @@ class _VendorMainState extends State<VendorMain> {
                 document.data()! as Map<String, dynamic>;
          return  Padding(
       padding:  EdgeInsets.symmetric(horizontal: 20.w),
-      child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}"),
+      child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}", nature: '',),
     );
           }).toList(),
         ); 

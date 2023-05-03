@@ -124,7 +124,7 @@ await servicesWork.set(data); // Note that we use set() instead of add() to add 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Square(color1: Colors.white, color2: Colors.black, sub: "$name", address: imgAddress.toString()),
+                Square(color1: Colors.white, color2: Colors.black, sub: "$name", address: imgAddress.toString(), nature: '',),
                
                 SizedBox(height: 20.h,),
                 Row(

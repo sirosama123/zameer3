@@ -323,7 +323,7 @@ class _FixerSignupState extends State<FixerSignup> {
                             onPressed: () {
                               Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyApp1()),);
+                              MaterialPageRoute(builder: (context) => MyApp1(pics: [],)),);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -350,7 +350,7 @@ class _FixerSignupState extends State<FixerSignup> {
                             onPressed: () {
                               Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyApp1()),);
+                              MaterialPageRoute(builder: (context) => MyApp1(pics: [],)),);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

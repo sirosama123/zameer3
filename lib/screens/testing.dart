@@ -32,17 +32,19 @@ import '../chatApp/allchatPersons.dart';
 
 
 class MyApp1 extends StatelessWidget {
-  @override
+  List<String> pics;
+  MyApp1({super.key,required this.pics});
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: MyHomePage(),
+      home: MyHomePage(pics: pics,),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  List<String> pics;
+  MyHomePage({super.key,required this.pics});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -228,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            MainHome(),
+            MainHome(pics: widget.pics,),
             UserAllChatPerson(),
             Container(color: Colors.green,),
             Container(color: Colors.blue,),

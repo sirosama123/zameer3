@@ -16,12 +16,14 @@ import 'package:vendorapp/widgets/heading2.dart';
 import 'package:vendorapp/widgets/labelsField.dart';
 import 'package:vendorapp/widgets/link.dart';
 import 'package:vendorapp/widgets/profile.dart';
+import 'package:vendorapp/widgets/slider.dart';
 import 'package:vendorapp/widgets/squares.dart';
 import 'package:vendorapp/widgets/subhead.dart';
 import 'package:vendorapp/widgets/title3.dart';
 
 class MainHome extends StatefulWidget {
-  const MainHome({super.key});
+  List<String> pics;
+  MainHome({super.key,required this.pics});
 
   @override
   State<MainHome> createState() => _MainHomeState();
@@ -48,75 +50,7 @@ class _MainHomeState extends State<MainHome> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                    CarouselSlider(
-                items: [
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/1.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //2nd Image of Slider
-                   Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/2.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //3rd Image of Slider
-                  
-                    
-                  //4th Image of Slider
-                 
-                    
-                  //5th Image of Slider
-                 
-                   Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/6.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                   Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/7.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                
-              
-                      ],
-                
-              //Slider Container properties
-                options: CarouselOptions(
-                  height: 180.0,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enableInfiniteScroll: true,
-                  autoPlayAnimationDuration: Duration(milliseconds: 1200),
-                  viewportFraction: 1,
-                ),
-                      ),
+                   Slider23(imgs: widget.pics),
                        Title3(heading: "All Services", color: Color(0xff034047)),
                 SizedBox(height: 20.h,),
                 Padding(
@@ -131,24 +65,24 @@ class _MainHomeState extends State<MainHome> {
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider(uno: 'Electrician',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider(uno: 'Electrician', nature: '',)),);
                               },
                               child: Square(
-                                color1:Color(0xff034047) , color2: Colors.black, sub: "\tElectric\nServices", address: "assets/images/electric.png")),
+                                color1:Color(0xff034047) , color2: Colors.black, sub: "\tElectric\nServices", address: "assets/images/electric.png", nature: '',)),
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: 'Plumber',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: 'Plumber', nature: '',)),);
                               },
-                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "Plumbing\nServices", address: "assets/images/plumbing.png")),
+                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "Plumbing\nServices", address: "assets/images/plumbing.png", nature: '',)),
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider(uno: 'Furniture',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider(uno: 'Furniture', nature: '',)),);
                               },
-                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "\t\t\t\t\t\t\t\t\t\t\tAc\nmaintainance", address: "assets/images/ac.png")),
+                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "\t\t\t\t\t\t\t\t\t\t\tAc\nmaintainance", address: "assets/images/ac.png", nature: '',)),
                           ],
                         ),
                         SizedBox(height: 10.h,),
@@ -159,23 +93,23 @@ class _MainHomeState extends State<MainHome> {
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '3',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '3', nature: '',)),);
                               },
-                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "HandyMan", address: "assets/images/mechanic.png")),
+                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "HandyMan", address: "assets/images/mechanic.png", nature: '',)),
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '4',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '4', nature: '',)),);
                               },
-                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "Fumigation", address: "assets/images/insecticide.png")),
+                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "Fumigation", address: "assets/images/insecticide.png", nature: '',)),
                             GestureDetector(
                               onTap: (){
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '5',)),);
+                                MaterialPageRoute(builder: (context) => ServiceProvider( uno: '5', nature: '',)),);
                               },
-                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "\t\tHouse\nCleaning", address: "assets/images/cleaning.png")),
+                              child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "\t\tHouse\nCleaning", address: "assets/images/cleaning.png", nature: '',)),
                           ],
                         ),
                        GestureDetector(child: Link(linkText: "see all"),onTap: (){

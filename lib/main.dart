@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
                  initialRoute: '/',
       routes: {
-        '/': (context) => AdminHome(),
+        '/': (context) => Initial(),
         '/vendorHome': (context) => vendorHome(),
         '/addCategory':(context) => AddCategory(),
       },

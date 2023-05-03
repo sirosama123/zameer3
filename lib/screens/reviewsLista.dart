@@ -16,6 +16,7 @@ import 'package:vendorapp/widgets/title2.dart';
 import 'package:vendorapp/widgets/title3.dart';
 
 import '../widgets/smaillTitlebold.dart';
+import '../widgets/titleTune.dart';
   
  
  class ReviewLists extends StatelessWidget {
@@ -24,6 +25,46 @@ import '../widgets/smaillTitlebold.dart';
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+       appBar: AppBar(
+        title: TitleTune(heading: "Reviews", color: Colors.white, weight: FontWeight.bold, size: 21),
+        backgroundColor: Color(0xff034047),
+        leading: GestureDetector(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Container(
+            height: 30.h,
+            width: 30.w,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color(0xff034047),
+                Color.fromARGB(255, 4, 81, 89),
+              ]),
+              borderRadius: BorderRadius.circular(5.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 4, 81, 89),
+                  offset: const Offset(0, 0),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
+            ),
+            child: Center(
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(

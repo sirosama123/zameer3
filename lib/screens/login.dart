@@ -35,6 +35,8 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final Provider11 = Provider.of<Provider1>(context); 
+      List<String>? vendor;
+  List<String>? user;
      void Login() async{
       FirebaseAuth auth = FirebaseAuth.instance;
       FirebaseFirestore db = FirebaseFirestore.instance;
@@ -66,9 +68,20 @@ class _LoginState extends State<Login> {
           setState(() {
             statee = false;
           });
+           await FirebaseFirestore.instance
+        .collection("banners")
+        .doc('X8xwi93SqrXE8ZeEoh5g')
+        .get()
+        .then((value) {
+        setState(() {
+           
+         user = List.from(value.data()!['userapp']);
+        });
+                    
+    });
           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MyApp1()),
+                            MaterialPageRoute(builder: (context) => MyApp1(pics: user!,)),
                           );
      
       } 
@@ -236,7 +249,7 @@ class _LoginState extends State<Login> {
                                 onPressed: () {
                                   Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyApp1()),);
+                                  MaterialPageRoute(builder: (context) => MyApp1(pics: [],)),);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -263,7 +276,7 @@ class _LoginState extends State<Login> {
                                 onPressed: () {
                                   Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyApp1()),);
+                                  MaterialPageRoute(builder: (context) => MyApp1(pics: [],)),);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

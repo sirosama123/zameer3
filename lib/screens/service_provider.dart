@@ -20,7 +20,8 @@ import '../provider/provider1.dart';
 
 class ServiceProvider extends StatelessWidget {
   String? uno;
-  ServiceProvider({super.key,required this.uno});
+  String? nature;
+  ServiceProvider({super.key,required this.uno,required this.nature});
 
   @override
   Widget build(BuildContext context) {

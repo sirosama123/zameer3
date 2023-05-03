@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendorapp/admin/subScreens/banners.dart';
+import 'package:vendorapp/admin/subScreens/bookingHistory.dart';
 import 'package:vendorapp/admin/subScreens/serviceslist.dart';
 import 'package:vendorapp/admin/subScreens/usersList.dart';
 import 'package:vendorapp/widgets/dashboardSquare.dart';
@@ -13,6 +14,7 @@ import 'package:vendorapp/widgets/squares.dart';
 import 'package:vendorapp/widgets/title5.dart';
 import 'package:vendorapp/widgets/wideSquaresDb.dart';
 
+import '../screens/reviewsLista.dart';
 import 'widgets/adminTabs.dart';
 
 class AdminHomeM extends StatefulWidget {
@@ -97,8 +99,16 @@ class _AdminHomeMState extends State<AdminHomeM> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TabsAdmin(
-                      img1: "assets/images/review.png", tabName: "Reviews"),
+                   GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReviewLists()),
+                      );
+                    },
+                    child: TabsAdmin(
+                        img1: "assets/images/review.png", tabName: "Reviews"),
+                  ),
                   GestureDetector(
                     onTap: () {
                       getdata();
@@ -114,9 +124,17 @@ class _AdminHomeMState extends State<AdminHomeM> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TabsAdmin(
-                      img1: "assets/images/hist.png",
-                      tabName: "Booking History"),
+                   GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookingHistory()),
+                      );
+                    },
+                    child: TabsAdmin(
+                        img1: "assets/images/hist.png",
+                        tabName: "Booking History"),
+                  ),
                   TabsAdmin(
                       img1: "assets/images/complains.png",
                       tabName: "Complains"),

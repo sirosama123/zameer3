@@ -80,7 +80,7 @@ scrollDirection: Axis.vertical,
                             onPressed: () {
                                Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MainHome()),);
+                            MaterialPageRoute(builder: (context) => MainHome(pics: [],)),);
                             },
                             child: Text("Decline",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),),
                             style: ButtonStyle(
