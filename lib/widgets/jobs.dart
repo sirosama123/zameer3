@@ -8,7 +8,13 @@ import 'package:vendorapp/widgets/title5.dart';
 
 class Jobs extends StatelessWidget {
   String value;
-   Jobs({super.key,required this.value});
+  String? name;
+  String? id;
+  String? date;
+  Jobs({super.key,
+  required this.value,
+  required this.date,required this.id,required this.name
+  });
 
   @override
   Widget build(BuildContext context) {

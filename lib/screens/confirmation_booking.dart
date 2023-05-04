@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:vendorapp/boarding_screen/presentation/contentModel.dart';
 import 'package:vendorapp/screens/mainhome.dart';
 import 'package:vendorapp/screens/orderDetail.dart';
@@ -35,10 +36,15 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
   Widget build(BuildContext context) {
     final Provider11 = Provider.of<Provider1>(context); 
     String mode = "Cash on Payment";
-
+    String? oid;
+    generateOrderId() {
+      var uuid = Uuid();
+      oid = uuid.v1().substring(0, 10);
+    }
     confirmOrder()async{
       CollectionReference jobs = FirebaseFirestore.instance.collection('jobs').doc().collection(Provider11.taskName.toString());
       CollectionReference posted_tasks = FirebaseFirestore.instance.collection('users').doc(Provider11.uid).collection("posted_tasks").doc().collection(Provider11.taskName.toString());
+    await generateOrderId();
     await  jobs.add({
         "customer_name":Provider11.fullname,
         "phone":Provider11.phone,
@@ -48,7 +54,9 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
         "address":Provider11.address,
         "charges":Provider11.taskbudget,
         "total":int.parse(Provider11.taskbudget.toString())+700,
-        "uid":Provider11.uid
+        "uid":Provider11.uid,
+        "status":'order placed',
+        "oid":oid.toString(),
       });
     await  posted_tasks.add({
         "customer_name":Provider11.fullname,
@@ -59,6 +67,8 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
         "address":Provider11.address,
         "charges":Provider11.taskbudget,
         "total":int.parse(Provider11.taskbudget.toString())+700,
+        "status":'order placed',
+        "oid":oid.toString(),
       });
       Navigator.push(
                               context,

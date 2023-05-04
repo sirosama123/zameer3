@@ -68,8 +68,15 @@ class _FixerSigninState extends State<FixerSignin> {
           collection("vendors").
           doc(users.user!.uid). 
           get();
-   
-          setState(() {
+          
+  List<String> list = [];
+  var querySnapshot = await FirebaseFirestore.instance.collection('works').doc(uuid).collection("sub").get();
+  querySnapshot.docs.forEach((document) {
+    var field = document.get('name');
+    list.add(field);
+  });
+  print(list);
+      setState(() {
             Provider11.fullname=data['fullname'];
             Provider11.gender=data['gender'];
             Provider11.email=data['email'];
@@ -87,6 +94,7 @@ class _FixerSigninState extends State<FixerSignin> {
             Provider11.FrontFaceurl = data['FrontImg'];
             Provider11.LeftFaceurl = data['LeftImg'];
             Provider11.RightFaceurl = data['RightImg'];
+            Provider11.tasks=list;
           });
           setState(() {
             statee = false;

@@ -42,6 +42,7 @@ class Provider1 extends ChangeNotifier {
 
   List<dynamic> names =[];
   List<dynamic> imgs =[];
+  List<String>? tasks ;
 
 
   notifyListeners();

@@ -11,6 +11,7 @@ import 'package:vendorapp/widgets/title5.dart';
 import 'package:vendorapp/widgets/wideSquaresDb.dart';
 
 import '../provider/provider1.dart';
+import '../vendorSide/jobs.dart';
 
 
 class VendorMain extends StatefulWidget {
@@ -56,7 +57,7 @@ class _VendorMainState extends State<VendorMain> {
               padding:  EdgeInsets.symmetric(horizontal: 15.w),
               child: Heading2(heading: "Primary Service", color: Color(0xff034047)),
             ),
-            SizedBox(height: 15.h,),
+           
             Container(
               
               child: StreamBuilder<QuerySnapshot>(
@@ -83,8 +84,14 @@ class _VendorMainState extends State<VendorMain> {
                   Map<String, dynamic> data =
                       snapshot.data!.docs[index].data()! as Map<String, dynamic>;
                  return  Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.w),
-      child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}", nature: '',),
+      padding:  EdgeInsets.symmetric(horizontal: 7.w,vertical: 7.w),
+      child: GestureDetector(
+        onTap: (){
+            Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Jobs1(name: data['name'])),);
+        },
+        child: Square(color1:Color(0xff034047) , color2: Colors.black, sub: "${data['name']}", address: "${data['imgAddress']}", nature: '',)),
     );
                 },
               ),
@@ -140,12 +147,8 @@ class _VendorMainState extends State<VendorMain> {
             SizedBox(height: 5.h,),
             Title5(heading: "Posted Jobs", color: Colors.grey, weight: FontWeight.w600),
             SizedBox(height: 15.h,),
-            Jobs(value: "54"),
-            SizedBox(height: 10.h,),
-            Jobs(value: "54"),
-            SizedBox(height: 10.h,),
-            Jobs(value: "54"),
-            SizedBox(height: 10.h,),
+
+         
       
           ],
         ),
@@ -154,3 +157,41 @@ class _VendorMainState extends State<VendorMain> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+class MyWidget extends StatelessWidget {
+  final List<String> services;
+
+  MyWidget({required this.services});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('jobs').doc().collection("Fumigation").snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        List<QueryDocumentSnapshot> filteredDocs = snapshot.data!.docs
+            .where((doc) => services.contains(doc.id))
+            .toList();
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: filteredDocs.length,
+          itemBuilder: (context, index) {
+            QueryDocumentSnapshot document = filteredDocs[index];
+            
+          },
+        );
+      },
+    );
+  }
+}
+
