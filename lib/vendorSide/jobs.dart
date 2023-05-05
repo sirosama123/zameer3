@@ -10,16 +10,67 @@ import 'package:vendorapp/widgets/squares.dart';
 import 'package:vendorapp/widgets/title5.dart';
 import 'package:vendorapp/widgets/wideSquaresDb.dart';
 import '../provider/provider1.dart';
+import '../widgets/titleTune.dart';
 
 
-class Jobs1 extends StatelessWidget {
+class Jobs1 extends StatefulWidget {
   String name;
   Jobs1({super.key,required this.name});
 
   @override
+  State<Jobs1> createState() => _Jobs1State();
+}
+
+class _Jobs1State extends State<Jobs1> {
+  @override
   Widget build(BuildContext context) {
-    final stream1 = FirebaseFirestore.instance.collection('jobs').doc("xlN7IdbLeivO4OLuNTHA").collection("$name").snapshots();
-     return StreamBuilder<QuerySnapshot>(
+    bool dta = false;
+     final Provider11 = Provider.of<Provider1>(context);
+    final stream1 = FirebaseFirestore.instance.collection('jobs').snapshots();
+     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+        title: TitleTune(heading: "${widget.name} jobs", color: Colors.white, weight: FontWeight.bold, size: 21),
+        backgroundColor: Color(0xff034047),
+        leading: GestureDetector(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Container(
+            height: 30.h,
+            width: 30.w,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color(0xff034047),
+                Color.fromARGB(255, 4, 81, 89),
+              ]),
+              borderRadius: BorderRadius.circular(5.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 4, 81, 89),
+                  offset: const Offset(0, 0),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
+            ),
+            child: Center(
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
       stream: stream1,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -33,7 +84,10 @@ class Jobs1 extends StatelessWidget {
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-            return Jobs(value: data['charges'], date: data['date'], id: data['oid'], name: data['customer_name']);
+          
+           
+            return  Container(
+              child: Provider11.tasks!.contains(data['service'].toString())?Jobs(value: data['charges'], date: data['date'], id: data['oid'], name: data['customer_name']):Container());
              ListTile(
               title: Text(data['service']),
               
@@ -41,6 +95,8 @@ class Jobs1 extends StatelessWidget {
           }).toList(),
         );
       },
-    );
+    ),
+     ),
+     );
   }
 }

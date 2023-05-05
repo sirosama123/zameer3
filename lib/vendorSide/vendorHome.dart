@@ -29,14 +29,14 @@ import '../chatApp/vendorChat.dart';
 import '../provider/provider1.dart';
 import '../screens/serviceslist.dart';
 import '../widgets/profile.dart';
+import 'bookings/bookingMainScreen.dart';
 
 class vendorHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: MyHomePage(),
+      home: BookingMainScreen(),
     );
   }
 }

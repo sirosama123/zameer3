@@ -9,13 +9,29 @@ import 'package:vendorapp/widgets/titleTune.dart';
 
 
 class CustomerServiceProfile extends StatelessWidget {
-  const CustomerServiceProfile({super.key});
+  String? name;
+  String? jobtask;
+  String? date;
+  String? time;
+  String? address;
+  String? status;
+  String? img;
+  CustomerServiceProfile({
+    super.key,
+    required this.name,
+    required this.jobtask,
+    required this.date,
+    required this.time,
+    required this.address,
+    required this.status,
+    required this.img
+    });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        title: TitleTune(heading: "Name Person", color: Colors.white, weight: FontWeight.bold, size: 21),
+        title: TitleTune(heading: "$name", color: Colors.white, weight: FontWeight.bold, size: 21),
         backgroundColor: Color(0xff034047),
         leading: GestureDetector(
           onTap: () async {
@@ -70,11 +86,12 @@ class CustomerServiceProfile extends StatelessWidget {
                     backgroundColor: Color(0xff034047),
                     child:CircleAvatar(
                       radius: 33.r,
-                      backgroundColor: Colors.amber,
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage("$img"),
                     ) ,
                   ),
                   SizedBox(width: 5.w,),
-                  TitleTune(heading: "Name Person", color: Colors.black, weight: FontWeight.bold, size: 16),
+                  TitleTune(heading: "$name", color: Colors.black, weight: FontWeight.bold, size: 16),
                     ],
                   ),
                   Row(
@@ -101,7 +118,7 @@ class CustomerServiceProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitleTune(heading: "Job Task", color: Colors.black, weight: FontWeight.normal, size: 12),
-                      TitleTune(heading: "Wash Basin Sink Problem", color: Colors.black, weight: FontWeight.bold, size: 16),
+                      TitleTune(heading: "$jobtask", color: Colors.black, weight: FontWeight.bold, size: 16),
                     ],
                   ),
                     ],
@@ -123,7 +140,7 @@ class CustomerServiceProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitleTune(heading: "Date", color: Colors.black, weight: FontWeight.normal, size: 12),
-                      TitleTune(heading: "10-10-2023", color: Colors.black, weight: FontWeight.bold, size: 16),
+                      TitleTune(heading: "$date", color: Colors.black, weight: FontWeight.bold, size: 16),
                     ],
                   ),
                   SizedBox(width: 30.w,),
@@ -131,7 +148,7 @@ class CustomerServiceProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitleTune(heading: "Time", color: Colors.black, weight: FontWeight.normal, size: 12),
-                      TitleTune(heading: "10-10-2023", color: Colors.black, weight: FontWeight.bold, size: 16),
+                      TitleTune(heading: "$time", color: Colors.black, weight: FontWeight.bold, size: 16),
                     ],
                   ),
                     ],
@@ -157,7 +174,7 @@ class CustomerServiceProfile extends StatelessWidget {
                         children: [
                           Container(
                             width: 200.w,
-                            child: TitleTune(heading: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", color: Colors.black, weight: FontWeight.bold, size: 14)),
+                            child: TitleTune(heading: "$address", color: Colors.black, weight: FontWeight.bold, size: 14)),
                         CircleAvatar(
                           radius: 20.r,
                           backgroundColor: Color(0xff034047),
@@ -173,7 +190,7 @@ class CustomerServiceProfile extends StatelessWidget {
                 ],
               ),
               
-              Stepper1(),
+              Stepper1(activeStatus: 0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -197,7 +214,7 @@ class CustomerServiceProfile extends StatelessWidget {
                                 backgroundColor:
                                     MaterialStateProperty.all(Colors.red),
                               ),
-                            )),
+                            )), 
                              Container(
                             height: 40.h,
                             width: 130.w,

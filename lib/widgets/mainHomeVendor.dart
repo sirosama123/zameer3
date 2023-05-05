@@ -147,7 +147,7 @@ class _VendorMainState extends State<VendorMain> {
             SizedBox(height: 5.h,),
             Title5(heading: "Posted Jobs", color: Colors.grey, weight: FontWeight.w600),
             SizedBox(height: 15.h,),
-
+            MyWidget()
          
       
           ],
@@ -167,28 +167,41 @@ class _VendorMainState extends State<VendorMain> {
 
 
 class MyWidget extends StatelessWidget {
-  final List<String> services;
+  
 
-  MyWidget({required this.services});
+
 
   @override
   Widget build(BuildContext context) {
+    final Provider11 = Provider.of<Provider1>(context);
+    final stream1 = FirebaseFirestore.instance.collection('jobs').snapshots();
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('jobs').doc().collection("Fumigation").snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+      stream: stream1,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
         }
-        List<QueryDocumentSnapshot> filteredDocs = snapshot.data!.docs
-            .where((doc) => services.contains(doc.id))
-            .toList();
-        return ListView.builder(
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
           shrinkWrap: true,
-          itemCount: filteredDocs.length,
-          itemBuilder: (context, index) {
-            QueryDocumentSnapshot document = filteredDocs[index];
-            
-          },
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+          
+           
+            return  Padding(
+              padding:  EdgeInsets.only(bottom:4.h),
+              child: Container(
+                child: Provider11.tasks!.contains(data['service'].toString())?Jobs(value: data['charges'], date: data['date'], id: data['oid'], name: data['customer_name']):Container()),
+            );
+             ListTile(
+              title: Text(data['service']),
+              
+            );
+          }).toList(),
         );
       },
     );

@@ -42,7 +42,7 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
       oid = uuid.v1().substring(0, 10);
     }
     confirmOrder()async{
-      CollectionReference jobs = FirebaseFirestore.instance.collection('jobs').doc().collection(Provider11.taskName.toString());
+      CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
       CollectionReference posted_tasks = FirebaseFirestore.instance.collection('users').doc(Provider11.uid).collection("posted_tasks").doc().collection(Provider11.taskName.toString());
     await generateOrderId();
     await  jobs.add({

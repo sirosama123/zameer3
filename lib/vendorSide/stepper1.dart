@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 
 
 class Stepper1 extends StatefulWidget {
-  const Stepper1({Key? key}) : super(key: key);
+  int? activeStatus;
+  Stepper1({
+    Key? key,
+    required this.activeStatus
+    }) : super(key: key);
 
   @override
   State<Stepper1> createState() => _Stepper1State();
@@ -65,7 +69,7 @@ class _Stepper1State extends State<Stepper1> {
               activeBarColor: Colors.green,
               inActiveBarColor: Colors.grey,
               inverted: false,
-              activeIndex: 0,
+              activeIndex: widget.activeStatus!,
               barThickness: 8,
             ),
           ],
