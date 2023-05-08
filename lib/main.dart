@@ -12,6 +12,7 @@ import 'package:vendorapp/vendorSide/createAccount.dart';
 import 'package:vendorapp/vendorSide/customerServiceProfile.dart';
 import 'package:vendorapp/vendorSide/fixer_completed.dart';
 import 'package:vendorapp/vendorSide/loginVendor.dart';
+import 'package:vendorapp/vendorSide/myjobs/myjobs.dart';
 import 'package:vendorapp/vendorSide/servicetype.dart';
 import 'package:vendorapp/vendorSide/typeOfService.dart';
 import 'package:vendorapp/vendorSide/vendorHome.dart';

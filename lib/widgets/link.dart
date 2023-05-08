@@ -11,7 +11,7 @@ class Link extends StatelessWidget {
       child: Text("$linkText",
        style: TextStyle(
         fontWeight: FontWeight.w600,
-        fontSize: 16.sp,
+        fontSize: 11.sp,
         color: Color.fromARGB(255, 1, 22, 39),
         decoration: TextDecoration.underline,
        ),
