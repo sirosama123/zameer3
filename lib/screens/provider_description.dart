@@ -457,7 +457,7 @@ class ProviderDescription extends StatelessWidget {
                           onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RequestService(service: service,)),);
+                            MaterialPageRoute(builder: (context) => RequestService(service: service, uid: uid,)),);
                           },
                           child: Text("Request Service"),
                           style: ButtonStyle(

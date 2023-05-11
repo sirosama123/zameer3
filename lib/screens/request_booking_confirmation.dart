@@ -23,15 +23,15 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../provider/provider1.dart';
 
 
-class ConfirmationBooking extends StatefulWidget {
+class RequestConfirmationBooking extends StatefulWidget {
   String service;
-  ConfirmationBooking({super.key,required this.service});
+  RequestConfirmationBooking({super.key,required this.service});
 
   @override
-  State<ConfirmationBooking> createState() => _ConfirmationBookingState();
+  State<RequestConfirmationBooking> createState() => _RequestConfirmationBookingState();
 }
 
-class _ConfirmationBookingState extends State<ConfirmationBooking> {
+class _RequestConfirmationBookingState extends State<RequestConfirmationBooking> {
   @override
   Widget build(BuildContext context) {
     final Provider11 = Provider.of<Provider1>(context); 

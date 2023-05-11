@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vendorapp/boarding_screen/presentation/contentModel.dart';
@@ -129,42 +130,11 @@ class _MainHomeState extends State<MainHome> {
                
                 
                 SizedBox(height: 20.h,),
-                CarouselSlider(
-              options: CarouselOptions(height: 140.h),
-              items: [
-                Profile(name: "arshad"),
-                Profile(name: "nasir"),
-                Profile(name: "shahid"),
-                Profile(name: "sahir"),
-                Profile(name: "nadeem"),
-              ].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                       margin:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-                      width: MediaQuery.of(context).size.width,
-                      height: 100.h,
-                      child: Container(
-                        decoration: BoxDecoration(   
-                borderRadius: BorderRadius.circular(10.0),           
-                      color: Colors.white,
-                      boxShadow: [
-                BoxShadow(
-                  color: Color(0xff034047),
-                  blurRadius: 6.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(0.0, 0.0),
-                  // Shadow position
-                ),
-              ],
-            ),
-            child: i,
-                      )
-                    );
-                  },
-                );
-              }).toList(),
-            )
+                Title3(heading: "Top Service Providers", color: Color(0xff034047)),
+                Padding(
+                  padding:EdgeInsets.symmetric(horizontal: 10.w),
+                  child: TopProviders(),
+                )
                 ],
               ),
             ),
@@ -175,5 +145,53 @@ class _MainHomeState extends State<MainHome> {
       ),
       
     );
+  }
+}
+
+
+
+
+class TopProviders extends StatelessWidget {
+  const TopProviders({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final CollectionReference collectionRef =
+    FirebaseFirestore.instance.collection('vendors');
+
+    Stream<QuerySnapshot> stream = collectionRef.snapshots();
+ 
+    return StreamBuilder<QuerySnapshot>(
+  stream: stream,
+  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    }
+
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return CircularProgressIndicator();
+    }
+
+    // Extract document snapshots from the stream
+    List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: documents.length,
+      itemBuilder: (BuildContext context, int index) {
+        Map<String, dynamic> data = documents[index].data() as Map<String, dynamic>;
+        if (data['rating']>2) {
+          return Padding(
+            padding:EdgeInsets.only(bottom: 5.h),
+            child: Profile(name: data['fullname'], profile: data['profile'], rating: double.parse(data['rating'].toString()), uid: data['uid']),
+          );
+        }
+        // Build your UI widget for each item
+      },
+    );
+  },
+);
+;
   }
 }

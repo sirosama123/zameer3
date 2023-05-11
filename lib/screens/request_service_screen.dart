@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:provider/provider.dart';
 import 'package:vendorapp/boarding_screen/presentation/contentModel.dart';
 import 'package:vendorapp/screens/confirmation_booking.dart';
 import 'package:vendorapp/screens/mainhome.dart';
@@ -14,19 +20,220 @@ import 'package:vendorapp/widgets/squares.dart';
 import 'package:vendorapp/widgets/title2.dart';
 import 'package:vendorapp/widgets/title3.dart';
 
+import '../provider/provider1.dart';
+import 'dart:async';
+import 'dart:io';
 
 class RequestService extends StatefulWidget {
   String service;
-   RequestService({super.key,required this.service});
+  String uid;
+  RequestService({super.key,required this.service,required this.uid});
 
   @override
   State<RequestService> createState() => _RequestServiceState();
 }
 
 class _RequestServiceState extends State<RequestService> {
-      String? _chosenValue;
+  String? _chosenValue;
+  String? imagePath;
   @override
+  final address = TextEditingController();
+  DateTime? RecievingDate = DateTime(2023,1,7);
+  String? timee  = " ";
   Widget build(BuildContext context) {
+
+
+
+    final Provider11 = Provider.of<Provider1>(context); 
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    
+         getLink()async{
+        FirebaseFirestore db = FirebaseFirestore.instance;
+        final storageRef = FirebaseStorage.instance.ref("${Provider11.cnic}req1"+".jpg");
+        File file = File(Provider11.imagePath.toString());
+        await  storageRef.putFile(file);
+        print("File Uploaded Successfully profile");
+        String downloadURL =  await storageRef.getDownloadURL();
+        print(downloadURL);
+      //   Provider11.FrontFaceurl = downloadURL;
+      //  await db.collection("vendors").doc(Provider11.uid).update({
+      //     "profile":downloadURL
+      //   });
+        setState(() {
+          imagePath=downloadURL;
+        });
+      }
+
+      void pickImageCamera() async{
+      
+      final ImagePicker _picker = ImagePicker();
+      final image = await _picker.pickImage(source: ImageSource.camera);
+      Provider11.imagePath = image!.path;
+       setState(() {
+        imagePath = image.path;
+      });
+      
+      showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text("Do you want to upload this Image?"),
+                  actions: <Widget>[
+                    TextButton(
+                     onPressed: () {
+                        // setState(() {
+                        //   Provider11.imagePath = image.path;
+                        // });
+                         getLink();
+                        Navigator.of(ctx).pop();},
+                      child: Container(
+                        color: Color(0xff2b578e),
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("Yes",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                    TextButton(
+                       onPressed: (){
+                  setState(() {
+                          imagePath = null;
+                        
+                        });
+                        
+                        Navigator.of(ctx).pop();
+                },
+                      child: Container(
+                        color: Color(0xff2b578e),
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("No",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+
+    }
+     void pickImageGallery() async{
+      
+      final ImagePicker _picker = ImagePicker();
+      final image = await _picker.pickImage(source: ImageSource.gallery);  
+      // Provider11.imagePath = image!.path;  
+      setState(() {
+        imagePath = image!.path;
+      });
+      showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text("Do you want to upload this Precsription?"),
+                  content: Image.asset(image!.path),
+                  actions: <Widget>[
+                    TextButton(
+                     onPressed: () {
+                        // setState(() {
+                        //   Provider11.imagePath = image.path;
+                        // });
+                        
+                        Navigator.of(ctx).pop();},
+                      child: Container(
+                        color: Color(0xff2b578e),
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("Yes",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                    TextButton(
+                       onPressed: (){
+                  setState(() {
+                          imagePath = null;
+                          // Provider11.imagePath = null;
+                        });
+                        Navigator.of(ctx).pop();
+                },
+                      child: Container(
+                        color: Color(0xff2b578e),
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("No",style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            
+       }
+       Profile(){
+       Dialogs.bottomMaterialDialog(
+          msg: 'Select From where you want..',
+          title: "Profile Picture",
+          color: Colors.white,
+          context: context,
+          actions: [
+           IconsButton(
+              onPressed: () {
+                pickImageGallery();
+              },
+              text: 'Gallery',
+              iconData: Icons.picture_in_picture,
+              color: Color(0xff034047),
+              textStyle: TextStyle(color: Colors.white),
+              iconColor: Colors.white,
+            ),
+            IconsButton(
+              onPressed: () {
+                pickImageCamera();
+              },
+              text: 'Camera',
+              iconData: Icons.camera,
+              color: Color(0xff034047),
+              textStyle: TextStyle(color: Colors.white),
+              iconColor: Colors.white,
+            ),
+          ]);
+    }
+
+    sendData()async{
+      CollectionReference requestJobs = FirebaseFirestore.instance.collection('requestJobs');
+      final yourRequests = FirebaseFirestore.instance.collection("users").doc(Provider11.uid).collection("your_requests");
+     await requestJobs.add({
+        "user_uid":Provider11.uid,
+        "address":address.text,
+        "service":widget.service,
+        "img":imagePath.toString(),
+        "date":RecievingDate.toString(),
+        "time":timee.toString(),
+        "provider_uid":widget.uid.toString()
+      });
+     await yourRequests.add({
+        "user_uid":Provider11.uid,
+        "address":address.text,
+        "service":widget.service,
+        "img":imagePath.toString(),
+        "date":RecievingDate.toString(),
+        "time":timee.toString(),
+        "provider_uid":widget.uid.toString()
+      });
+      showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text("Your Request Has been Send!"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Container(
+                        color: Color(0xff034047),
+
+                        padding:  EdgeInsets.all(14),
+                        child:  Text("okay"),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+    }
+
+
+
+
+
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -50,7 +257,7 @@ class _RequestServiceState extends State<RequestService> {
                         Labels(heading: "Your Address", color: Color(0xff034047)),
                         Container(
                           child: TextFormField(
-                            
+                            controller: address,
                             style: TextStyle(
                               color:Color(0xff034047) 
                             ),
@@ -98,13 +305,20 @@ class _RequestServiceState extends State<RequestService> {
                 Labels(heading: "Select Date", color: Color(0xff034047)),
                 SizedBox(height: 5.h,),
                 GestureDetector(
-                  onTap: (){
-                    showDatePicker (
-                      context: context, 
-                      initialDate:DateTime(2023) , 
-                      firstDate: DateTime(2023), 
-                      lastDate: DateTime(2024)
-                      );
+                  onTap: ()async{
+                    DateTime? newDate = await showDatePicker (
+                                                    context: context, 
+                                                    initialDate:DateTime.now() , 
+                                                    firstDate: DateTime(2023), 
+                                                    lastDate: DateTime(2024)
+                                                    );
+                                                    if (newDate == null) {
+                                                      return;
+                                                    } else {
+                                                      setState(() {
+                                                        RecievingDate = newDate;
+                                                      },);}
+
                   },
                   child: Container(
                   height: 80.0,
@@ -131,38 +345,38 @@ class _RequestServiceState extends State<RequestService> {
                             showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title:   Labels(heading: "PLease Select Time",color: Colors.blue,),
+                  title:   Labels(heading: "Please Select Time",color: Colors.blue,),
                     content: SingleChildScrollView(
           child: Column(
             children: <Widget>[
                Divider(),
                GestureDetector(child: Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                 
+                 timee="9:00AM - 9:30AM";
                });  Navigator.of(ctx).pop();
                                     },),
                Divider(),
                GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                
+                timee="9:00AM - 9:30AM";
                });Navigator.of(ctx).pop();},),
                Divider(),
-               GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                 
+               GestureDetector(child:  Labels(heading: "10:00AM - 10:30AM",color: Colors.blue,),onTap: (){setState(() {
+                 timee="10:00AM - 10:30AM";
                }); Navigator.of(ctx).pop();},),
                Divider(),
-               GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                 
+               GestureDetector(child:  Labels(heading: "11:00AM - 11:30AM",color: Colors.blue,),onTap: (){setState(() {
+                 timee="11:00AM - 11:30AM";
                }); Navigator.of(ctx).pop();},),
                Divider(),
-               GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                 
+               GestureDetector(child:  Labels(heading: "12:00PM - 12:30PM",color: Colors.blue,),onTap: (){setState(() {
+                 timee="12:00PM - 12:30PM";
                });Navigator.of(ctx).pop();},),
                Divider(),
-               GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                
+               GestureDetector(child:  Labels(heading: "1:00PM - 1:30PM",color: Colors.blue,),onTap: (){setState(() {
+                timee="1:00PM - 1:30PM";
                }); Navigator.of(ctx).pop();},),
                Divider(),
-               GestureDetector(child:  Labels(heading: "9:00AM - 9:30AM",color: Colors.blue,),onTap: (){setState(() {
-                 
+               GestureDetector(child:  Labels(heading: "2:00PM - 2:30PM",color: Colors.blue,),onTap: (){setState(() {
+                 timee="2:00PM - 2:30PM";
                });Navigator.of(ctx).pop();},),
                Divider(),
             ],
@@ -209,7 +423,7 @@ class _RequestServiceState extends State<RequestService> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Labels(heading: "Service Information:", color: Color(0xff034047)),
-                  Labels(heading: "Service Name", color: Color(0xff034047)),
+                  Labels(heading: "${widget.service}", color: Color(0xff034047)),
                 ],
               ),
               SizedBox(height: 20.h,),
@@ -236,121 +450,124 @@ class _RequestServiceState extends State<RequestService> {
                   child:Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Title3(heading: "Upload Image", color: Colors.white),
+                    Title3(heading:imagePath==null? "Upload Image": "Image Uploaded", color: Colors.white),
                     Labels(heading: "PNG & JPEG are allowed", color: Colors.black),
                     Padding(
             padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-            child: Container(
-              height: 80.h,
-              width: double.infinity,
-              
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  boxShadow: [
-                        BoxShadow(
-                          color:Colors.white ,
-                          blurRadius: 6.0,
-                          spreadRadius: 1.0,
-                          offset: Offset(0.0, 0.0),
-                          // Shadow position
-                        ),
-                      ],
+            child: GestureDetector(
+              onTap: (){
+                Profile();
+              },
+              child: Container(
+                height: 80.h,
+                width: double.infinity,
+                
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    boxShadow: [
+                          BoxShadow(
+                            color:Colors.white ,
+                            blurRadius: 6.0,
+                            spreadRadius: 1.0,
+                            offset: Offset(0.0, 0.0),
+                            // Shadow position
+                          ),
+                        ],
+                ),
+                child: Image.asset("assets/images/download.png"),
               ),
-              child: Image.asset("assets/images/download.png"),
             ),
                     )
                   ],
                   )
                   ),
                 ),
-                SizedBox(height: 20.h,),
-               Padding(
-                 padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                 child: Container(
-                  width: double.infinity,
-                   child: DropdownButton<String>(
-            onChanged: (ValueKey){
+          //       SizedBox(height: 20.h,),
+          //      Padding(
+          //        padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          //        child: Container(
+          //         width: double.infinity,
+          //          child: DropdownButton<String>(
+          //   onChanged: (ValueKey){
           
-            },
-            focusColor:Colors.white,
-            value: _chosenValue,
-            //elevation: 5,
-            style: TextStyle(color: Colors.white),
-            iconEnabledColor:Colors.black,
-            items: <String>[
-              'Android',
-              'IOS',
-              'Flutter',
-              'Node',
-              'Java',
-              'Python',
-              'PHP',
-            ].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value,style:TextStyle(color:Colors.black),),
-              );
-            }).toList(),
-            hint:Text(
-              "Terms & Conditions\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
-              style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w500),
-            ),
+          //   },
+          //   focusColor:Colors.white,
+          //   value: _chosenValue,
+          //   //elevation: 5,
+          //   style: TextStyle(color: Colors.white),
+          //   iconEnabledColor:Colors.black,
+          //   items: <String>[
+          //     'Android',
+          //     'IOS',
+          //     'Flutter',
+          //     'Node',
+          //     'Java',
+          //     'Python',
+          //     'PHP',
+          //   ].map<DropdownMenuItem<String>>((String value) {
+          //     return DropdownMenuItem<String>(
+          //   value: value,
+          //   child: Text(value,style:TextStyle(color:Colors.black),),
+          //     );
+          //   }).toList(),
+          //   hint:Text(
+          //     "Terms & Conditions\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+          //     style: TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 14,
+          //     fontWeight: FontWeight.w500),
+          //   ),
             
-          ),
-                 ),
-               ),
-               SizedBox(height: 20.h,),
-            Padding(
-                 padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                 child: Container(
-                  width: double.infinity,
-                   child: DropdownButton<String>(
-            onChanged: (ValueKey){
+          // ),
+          //        ),
+          //      ),
+          //      SizedBox(height: 20.h,),
+          //   Padding(
+          //        padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          //        child: Container(
+          //         width: double.infinity,
+          //          child: DropdownButton<String>(
+          //   onChanged: (ValueKey){
           
-            },
-            focusColor:Colors.white,
-            value: _chosenValue,
-            //elevation: 5,
-            style: TextStyle(color: Colors.white),
-            iconEnabledColor:Colors.black,
-            items: <String>[
-              'Android',
-              'IOS',
-              'Flutter',
-              'Node',
-              'Java',
-              'Python',
-              'PHP',
-            ].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value,style:TextStyle(color:Colors.black),),
-              );
-            }).toList(),
-            hint:Text(
-              "How It works\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
-              style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w500),
-            ),
+          //   },
+          //   focusColor:Colors.white,
+          //   value: _chosenValue,
+          //   //elevation: 5,
+          //   style: TextStyle(color: Colors.white),
+          //   iconEnabledColor:Colors.black,
+          //   items: <String>[
+          //     'Android',
+          //     'IOS',
+          //     'Flutter',
+          //     'Node',
+          //     'Java',
+          //     'Python',
+          //     'PHP',
+          //   ].map<DropdownMenuItem<String>>((String value) {
+          //     return DropdownMenuItem<String>(
+          //   value: value,
+          //   child: Text(value,style:TextStyle(color:Colors.black),),
+          //     );
+          //   }).toList(),
+          //   hint:Text(
+          //     "How It works\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+          //     style: TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 14,
+          //     fontWeight: FontWeight.w500),
+          //   ),
             
-          ),
-                 ),
-               ),
+          // ),
+          //        ),
+          //      ),
                SizedBox(height: 20.h,),
                 Container(
                           height: 48.h,
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ConfirmationBooking(service: widget.service,)),);
+                              sendData();
                             },
                             child: Text("Request Send"),
                             style: ButtonStyle(
