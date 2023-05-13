@@ -57,6 +57,8 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
         "uid":Provider11.uid,
         "status":'order placed',
         "oid":oid.toString(),
+        "detail":Provider11.taskdetail,
+        "time":'${DateTime.now().hour + DateTime.now().minute}'
       });
     await  posted_tasks.add({
         "customer_name":Provider11.fullname,
@@ -69,6 +71,7 @@ class _ConfirmationBookingState extends State<ConfirmationBooking> {
         "total":int.parse(Provider11.taskbudget.toString())+700,
         "status":'order placed',
         "oid":oid.toString(),
+        "detail":Provider11.taskdetail
       });
       Navigator.push(
                               context,

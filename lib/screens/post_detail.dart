@@ -14,7 +14,25 @@ import '../widgets/labelsField.dart';
 
 
 class PostDetail extends StatefulWidget {
-  const PostDetail({super.key});
+  String? name;
+  String? timee;
+  String? address;
+  String? datee;
+  String? budget;
+  String? detail;
+  String? oid;
+  String? service;
+  PostDetail({
+    super.key,
+    required this.address,
+    required this.budget,
+    required this.datee,
+    required this.detail,
+    required this.name,
+    required this.oid,
+    required this.service,
+    required this.timee
+    });
 
   @override
   State<PostDetail> createState() => _PostDetailState();
@@ -59,7 +77,7 @@ class _PostDetailState extends State<PostDetail> {
               ),
                ),
               SizedBox(height: 10.h,),
-              Center(child: Title1(heading: "Job Task", color: Colors.black)),
+              Center(child: Title1(heading: "${widget.service}", color: Colors.black)),
               SizedBox(height: 20.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,11 +98,11 @@ class _PostDetailState extends State<PostDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Labels(heading: "Posted By", color: Color(0xff034047)),
-                      SubHead(heading: "Name of Person", color: Colors.black)
+                      SubHead(heading: "${widget.name}", color: Colors.black)
                     ],
                   )
                   ],),
-                SDescription(description: "2 hours ago")
+                SDescription(description: "${widget.timee}")
                 ],
               ),
               SizedBox(height: 10.h,),
@@ -107,7 +125,7 @@ class _PostDetailState extends State<PostDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Labels(heading: "Location", color: Color(0xff034047)),
-                      SubHead(heading: "Karachi", color: Colors.black)
+                      SubHead(heading: "${widget.address}", color: Colors.black)
                     ],
                   )
                   ],),
@@ -135,7 +153,7 @@ class _PostDetailState extends State<PostDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Labels(heading: "Due Date", color: Color(0xff034047)),
-                      SubHead(heading: "10-09-2023", color: Colors.black)
+                      SubHead(heading: "${widget.datee}", color: Colors.black)
                     ],
                   )
                   ],),
@@ -151,7 +169,7 @@ class _PostDetailState extends State<PostDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Title3(heading: "TASK BUDGET ESTIMATE", color: Colors.black),
-                    BTitle2(heading: "RS 1000", color: Colors.green),
+                    BTitle2(heading: "RS ${widget.budget}", color: Colors.green),
                     BTitle2(heading: "Awaiting Offer", color: Colors.black),
           
                   ],
@@ -160,7 +178,7 @@ class _PostDetailState extends State<PostDetail> {
               SizedBox(height: 20.h,),
               BTitle2(heading: "Task Detail", color: Color(0xff034047)),
               SizedBox(height: 10.h,),
-              Title3(heading: "5 roomsa have to clean", color: Colors.black),
+              Title3(heading: "${widget.detail}", color: Colors.black),
               SizedBox(height: 20.h,),
               BTitle2(heading: "Add Attachments to your Task", color: Color(0xff034047)),
               SizedBox(height: 10.h,),

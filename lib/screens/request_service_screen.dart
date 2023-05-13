@@ -197,7 +197,10 @@ class _RequestServiceState extends State<RequestService> {
         "img":imagePath.toString(),
         "date":RecievingDate.toString(),
         "time":timee.toString(),
-        "provider_uid":widget.uid.toString()
+        "provider_uid":widget.uid.toString(),
+        "status":"pending",
+        "date_post":'${DateTime.now().day+DateTime.now().month}',
+        "time_post":'${DateTime.now().hour+DateTime.now().minute}',
       });
      await yourRequests.add({
         "user_uid":Provider11.uid,
@@ -206,7 +209,10 @@ class _RequestServiceState extends State<RequestService> {
         "img":imagePath.toString(),
         "date":RecievingDate.toString(),
         "time":timee.toString(),
-        "provider_uid":widget.uid.toString()
+        "provider_uid":widget.uid.toString(),
+        "status":"pending",
+        "date_post":'${DateTime.now().day+DateTime.now().month}',
+        "time_post":'${DateTime.now().hour+DateTime.now().minute}',
       });
       showDialog(
                 context: context,

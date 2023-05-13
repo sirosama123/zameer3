@@ -28,6 +28,7 @@ import 'package:vendorapp/widgets/heading2.dart';
 import 'package:flutter/material.dart';
 
 import '../chatApp/allchatPersons.dart';
+import 'orders/postsScreen.dart';
 
 
 
@@ -131,12 +132,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.white,
                     height: 2.h,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.luggage,color: Colors.white,),
-                      SizedBox(width: 10.w,),
-                      Heading2(color: Colors.white, heading: 'Order',)
-                    ],
+                  GestureDetector(
+                    onTap: (){
+                        Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PostScreen()),);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.luggage,color: Colors.white,),
+                        SizedBox(width: 10.w,),
+                        Heading2(color: Colors.white, heading: 'Order',)
+                      ],
+                    ),
                   ),
                   SizedBox(height: 15.h,),
                   Divider(

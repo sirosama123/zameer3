@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vendorapp/screens/signin.dart';
 import 'package:vendorapp/widgets/heading2.dart';
 
+import 'orders/postsScreen.dart';
+
 
 
 class MyApp3 extends StatelessWidget {
@@ -125,12 +127,18 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                     height: 2.h,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.luggage,color: Colors.white,),
-                      SizedBox(width: 10.w,),
-                      Heading2(color: Colors.white, heading: 'Order',)
-                    ],
+                  GestureDetector(
+                    onTap: (){
+                     
+                      
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.luggage,color: Colors.white,),
+                        SizedBox(width: 10.w,),
+                        Heading2(color: Colors.white, heading: 'Order',)
+                      ],
+                    ),
                   ),
                   SizedBox(height: 15.h,),
                   Divider(
