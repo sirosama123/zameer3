@@ -66,6 +66,7 @@ dependencies:
   flutter_switch: ^0.3.2
   tap_to_expand: ^0.6.1
   smooth_page_indicator: ^1.1.0
+  flutter_credit_card: ^3.0.6
 
 
 dev_dependencies:
