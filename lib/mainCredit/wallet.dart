@@ -105,60 +105,53 @@ class Wallet extends StatelessWidget {
             ),
           
             Expanded(
-              flex: 5,
-              child: Column(
-                children: [
-                  TitleTune(heading: "History", color: Colors.grey, weight: FontWeight.bold, size: 10),
-                  SizedBox(height: 3.h,),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    itemBuilder: (context,index){
-                      return Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(7.r),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TitleTune(heading: "Transferred from", color: Colors.black, weight: FontWeight.normal, size: 10),
-                                        TitleTune(heading: "Name", color: Colors.black, weight: FontWeight.bold, size: 10),
-                                      ],
-                                    ),
-                                    TitleTune(heading: "\$56", color: Colors.orange, weight: FontWeight.bold, size: 12),
-                                  ],
-                                ),
-                                SizedBox(height: 5.h,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        TitleTune(heading: "Remaining ammount", color: Colors.black, weight: FontWeight.normal, size: 10),
-                                        TitleTune(heading: "12", color: Colors.black, weight: FontWeight.bold, size: 10),
-                                      ],
-                                    ),
-                                    TitleTune(heading: "12 Arpril 23 | 10:30 AM", color: Colors.white, weight: FontWeight.bold, size: 12),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ) ,
-                        ),
-                      );
-                    }),
-                ],
-              )
-            )
+              flex: 2,
+              child:Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Colors.orange,
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(height: 120.h,width: 120.w,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/send.png"))),),
+                        SizedBox(height: 5.h,),
+                        TitleTune(heading: "\$ send to Admin", color: Colors.white, weight: FontWeight.bold, size: 15),
+                        
+                       
+                      ],
+                    ),
+                  ),
+                ),
+              ) 
+            ),
+            Expanded(
+              flex: 2,
+              child:Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Colors.orange,
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(height: 120.h,width: 120.w,decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/earning.png"))),),
+                        SizedBox(height: 5.h,),
+                        TitleTune(heading: "\$ Earn Money", color: Colors.white, weight: FontWeight.bold, size: 15),
+                        
+                       
+                      ],
+                    ),
+                  ),
+                ),
+              ) 
+            ),
           ],
         ),
     );

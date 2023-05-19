@@ -37,8 +37,9 @@ class SurveyScreenForm extends StatelessWidget {
       TextEditingController shopItem = TextEditingController();
       TextEditingController lorem1 = TextEditingController();
       TextEditingController lorem2 = TextEditingController();
+      final _formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
-
+    final Provider11 = Provider.of<Provider1>(context);
     return Scaffold(
       appBar: AppBar(
           title: TitleTune(heading: "Survey", color: Colors.white, weight: FontWeight.bold, size: 21),
@@ -82,120 +83,165 @@ class SurveyScreenForm extends StatelessWidget {
           ),
 
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-               Container(
-                              padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                controller: serviceType,
-                                decoration: InputDecoration(
-                                    focusColor: Color(0xff164584),
-                                    border: InputBorder.none,
-                                    labelText: "Service Type",
-                                    
-                                    labelStyle: TextStyle(color: Colors.black)),
-                                      validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Field is empty';
-                                }
-                                return null;
-                              },
-                              ),
-                            ),
-                            SizedBox(height:8.h,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                controller: issue,
-                                decoration: InputDecoration(
-                                    focusColor: Color(0xff164584),
-                                    border: InputBorder.none,
-                                    labelText: "Issue Identified",
-                                    
-                                    labelStyle: TextStyle(color: Colors.black)),
-                                      validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Field is empty';
-                                }
-                                return null;
-                              },
-                              ),
-                            ),
-                            SizedBox(height:8.h,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                controller: shopItem,
-                                decoration: InputDecoration(
-                                    focusColor: Color(0xff164584),
-                                    border: InputBorder.none,
-                                    labelText: "shop item required (if any)",
-                                    
-                                    labelStyle: TextStyle(color: Colors.black)),
-                                  
-                              ),
-                            ),
-                            SizedBox(height:8.h,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                controller: lorem1,
-                                decoration: InputDecoration(
-                                    focusColor: Color(0xff164584),
-                                    border: InputBorder.none,
-                                    labelText: "lorem lipsum",
-                                    
-                                    labelStyle: TextStyle(color: Colors.black)),
-                                      validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Field is empty';
-                                }
-                                return null;
-                              },
-                              ),
-                            ),
-                            SizedBox(height:8.h,),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                controller: lorem2,
-                                decoration: InputDecoration(
-                                    focusColor: Color(0xff164584),
-                                    border: InputBorder.none,
-                                    labelText: "lorem lipsum",
-                                    
-                                    labelStyle: TextStyle(color: Colors.black)),
-                                      validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Field is empty';
-                                }
-                                return null;
-                              },
-                              ),
-                            ),
-                            SizedBox(height:8.h,),
-            ],
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding:EdgeInsets.symmetric(horizontal: 10.w),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/logo3.png",height: 120.h,width: 120.w,),
+                    SizedBox(height: 10.h,),
+                    Container(
+                                    padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        border: Border.all(color: Colors.black)),
+                                    child: TextFormField(
+                                      controller: serviceType,
+                                      decoration: InputDecoration(
+                                          focusColor: Color(0xff164584),
+                                          border: InputBorder.none,
+                                          labelText: "Service Type",
+                                          
+                                          labelStyle: TextStyle(color: Colors.black)),
+                                            validator: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Field is empty';
+                                      }
+                                      return null;
+                                    },
+                                    ),
+                                  ),
+                                  SizedBox(height:8.h,),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        border: Border.all(color: Colors.black)),
+                                    child: TextFormField(
+                                      controller: issue,
+                                      decoration: InputDecoration(
+                                          focusColor: Color(0xff164584),
+                                          border: InputBorder.none,
+                                          labelText: "Issue Identified",
+                                          
+                                          labelStyle: TextStyle(color: Colors.black)),
+                                            validator: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Field is empty';
+                                      }
+                                      return null;
+                                    },
+                                    ),
+                                  ),
+                                  SizedBox(height:8.h,),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        border: Border.all(color: Colors.black)),
+                                    child: TextFormField(
+                                      controller: shopItem,
+                                      decoration: InputDecoration(
+                                          focusColor: Color(0xff164584),
+                                          border: InputBorder.none,
+                                          labelText: "shop item required (if any)",
+                                          
+                                          labelStyle: TextStyle(color: Colors.black)),
+                                        
+                                    ),
+                                  ),
+                                  SizedBox(height:8.h,),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        border: Border.all(color: Colors.black)),
+                                    child: TextFormField(
+                                      controller: lorem1,
+                                      decoration: InputDecoration(
+                                          focusColor: Color(0xff164584),
+                                          border: InputBorder.none,
+                                          labelText: "Order Id",
+                                          
+                                          labelStyle: TextStyle(color: Colors.black)),
+                                            validator: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Field is empty';
+                                      }
+                                      return null;
+                                    },
+                                    ),
+                                  ),
+                                  SizedBox(height:8.h,),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(20, 2, 10, 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        border: Border.all(color: Colors.black)),
+                                    child: TextFormField(
+                                      controller: lorem2,
+                                      decoration: InputDecoration(
+                                          focusColor: Color(0xff164584),
+                                          border: InputBorder.none,
+                                          labelText: "User Name",
+                                          
+                                          labelStyle: TextStyle(color: Colors.black)),
+                                            validator: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Field is empty';
+                                      }
+                                      return null;
+                                    },
+                                    ),
+                                  ),
+                                  SizedBox(height:8.h,),
+                                  Container(
+                              height: 48.h,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                 if(_formKey.currentState!.validate()){
+                                   FirebaseFirestore.instance.collection('surveys').add({
+                                    "servicetype":serviceType.text,
+                                    "issue":issue.text,
+                                    "shopItem":shopItem.text,
+                                    "oid":lorem1.text,
+                                    "user_name":lorem2.text,
+                                    "servey_from":Provider11.fullname,
+                                    "provider_uid":Provider11.uid
+                                  });
+                                  serviceType.clear();
+                                  issue.clear();
+                                  shopItem.clear();
+                                  lorem1.clear();
+                                  lorem2.clear();
+                                  Navigator.of(context).pop();
+                                  // Navigator.push(
+                                  // context,
+                                  // MaterialPageRoute(builder: (context) => ServiceSelection()),);
+                                 }
+                                },
+                                child: Text("Send Survey"),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Color(0xff034047)),
+                                ),
+                    )
+                  ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
     );

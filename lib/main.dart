@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
                  initialRoute: '/',
       routes: {
-        '/': (context) => SurveyScreenForm(),
+        '/': (context) => Wallet(),
         '/vendorHome': (context) => vendorHome(),
         '/addCategory':(context) => AddCategory(),
       },
